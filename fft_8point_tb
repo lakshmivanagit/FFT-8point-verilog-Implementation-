@@ -1,0 +1,61 @@
+module tb_fft_8point;
+reg [31:0] x0_real, x0_imag;
+reg [31:0] x1_real, x1_imag;
+reg [31:0] x2_real, x2_imag;
+reg [31:0] x3_real, x3_imag;
+reg [31:0] x4_real, x4_imag;
+reg [31:0] x5_real, x5_imag;
+reg [31:0] x6_real, x6_imag;
+reg [31:0] x7_real, x7_imag;
+wire [31:0] X0_real, X0_imag;
+wire [31:0] X1_real, X1_imag;
+wire [31:0] X2_real, X2_imag;
+wire [31:0] X3_real, X3_imag;
+wire [31:0] X4_real, X4_imag;
+wire [31:0] X5_real, X5_imag;
+wire [31:0] X6_real, X6_imag;
+wire [31:0] X7_real, X7_imag;
+// Instantiate the FFT module
+fft_8point uut (
+.x0_real(x0_real), .x0_imag(x0_imag),
+.x1_real(x1_real), .x1_imag(x1_imag),
+.x2_real(x2_real), .x2_imag(x2_imag),
+.x3_real(x3_real), .x3_imag(x3_imag),
+.x4_real(x4_real), .x4_imag(x4_imag),
+.x5_real(x5_real), .x5_imag(x5_imag),
+.x6_real(x6_real), .x6_imag(x6_imag),
+.x7_real(x7_real), .x7_imag(x7_imag),
+.X0_real(X0_real), .X0_imag(X0_imag),
+.X1_real(X1_real), .X1_imag(X1_imag),
+.X2_real(X2_real), .X2_imag(X2_imag),
+.X3_real(X3_real), .X3_imag(X3_imag),
+.X4_real(X4_real), .X4_imag(X4_imag),
+.X5_real(X5_real), .X5_imag(X5_imag),
+.X6_real(X6_real), .X6_imag(X6_imag),
+.X7_real(X7_real), .X7_imag(X7_imag)
+);
+verilog testbench for 8 point fft:
+initial begin
+// Input: [1,2,3,4,4,3,2,1], all imag = 0
+x0_real = 32'h3F800000; x0_imag = 32'h00000000; // 1
+x1_real = 32'h40000000; x1_imag = 32'h00000000; // 2
+x2_real = 32'h40400000; x2_imag = 32'h00000000; // 3
+x3_real = 32'h40800000; x3_imag = 32'h00000000; // 4
+x4_real = 32'h40800000; x4_imag = 32'h00000000; // 4
+x5_real = 32'h40400000; x5_imag = 32'h00000000; // 3
+x6_real = 32'h40000000; x6_imag = 32'h00000000; // 2
+x7_real = 32'h3F800000; x7_imag = 32'h00000000; // 1
+#50; // Wait for combinational FFT to settle
+$display("FFT Output for input [1 2 3 4 4 3 2 1]:");
+$display("X(0) = %h + %hj", X0_real, X0_imag);
+$display("X(1) = %h + %hj", X1_real, X1_imag);
+$display("X(2) = %h + %hj", X2_real, X2_imag);
+$display("X(3) = %h + %hj", X3_real, X3_imag);
+$display("X(4) = %h + %hj", X4_real, X4_imag);
+$display("X(5) = %h + %hj", X5_real, X5_imag);
+$display("X(6) = %h + %hj", X6_real, X6_imag);
+$display("X(7) = %h + %hj", X7_real, X7_imag);
+#10;
+$finish;
+end
+endmodule
